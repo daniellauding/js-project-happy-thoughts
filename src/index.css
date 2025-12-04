@@ -7,6 +7,14 @@
 :root {
   --body-font-family: "Roboto Mono", monospace, system-ui, Avenir, Helvetica, Arial, sans-serif; /* font-body class */
   --number-font-family: "Roboto", sans-serif; /* font-number class */
+
+  --background: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #111827;
+  }
 }
 
 * {
@@ -23,6 +31,6 @@
 
 body {
   font-family: var(--body-font-family);
+  background: var(--background);
+  transition: background-color 0.3s ease;
 }
-
-/* ADD DARK MODE SUPPORT */
