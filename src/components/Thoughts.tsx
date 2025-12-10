@@ -4,20 +4,21 @@ import { Thought } from "../types/Thought";
 import ThoughtForm from "./ThoughtForm";
 import ThoughtList from "./ThoughtList";
 
-const InitialThoughts: Thought[] = [
-  {
-    id: "1",
-    text: "I'm happy because I just moved into a new apartment!",
-    hearts: 0,
-  },
-  {
-    id: "2",
-    text: "Coffee is great",
-  }
-]
+// const InitialThoughts: Thought[] = [
+//   {
+//     id: "1",
+//     text: "I'm happy because I just moved into a new apartment!",
+//     hearts: 0,
+//   },
+//   {
+//     id: "2",
+//     text: "Coffee is great",
+//   }
+// ]
 
 const Thoughts = () => {
-  const [thoughts, setThoughts] = useState<Thought[]>(InitialThoughts);
+  // const [thoughts, setThoughts] = useState<Thought[]>(InitialThoughts);
+  const [thoughts, setThoughts] = useState<Thought[]>([]);
 
   useEffect(() => {
     fetch('https://happy-thoughts-api-4ful.onrender.com/thoughts')
@@ -59,7 +60,7 @@ const Thoughts = () => {
       {/* Skickar onSubmitThought ner till ThoughtForm */}
 			<ThoughtForm onSubmitThought={handleSubmitThought} />
       {/* Skickar hela listan och onLike-handlern ner till ThoughtList */}
-			<ThoughtList thoughts={thoughts} onLike={handleLike} />
+			{/* <ThoughtList thoughts={thoughts} onLike={handleLike} /> */}
     </div>
   )
 }
