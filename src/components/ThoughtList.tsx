@@ -1,5 +1,5 @@
 import React from "react";
-import { Thought, ThoughtListProps } from "../types/thought";
+import { Thought, ThoughtListProps } from "../types/Thought";
 import ThoughtCard from "./ThoughtCard";
 
 const ThoughtList: React.FC<ThoughtListProps> = ({ thoughts, onLike }) => {

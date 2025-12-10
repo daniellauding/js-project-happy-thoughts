@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Thought } from "../types/thought";
+import { Thought } from "../types/Thought";
 import ThoughtForm from "./ThoughtForm";
 import ThoughtList from "./ThoughtList";
 
@@ -18,6 +18,16 @@ const InitialThoughts: Thought[] = [
 
 const Thoughts = () => {
   const [thoughts, setThoughts] = useState<Thought[]>(InitialThoughts);
+
+  useEffect(() => {
+    fetch('https://happy-thoughts-api-4ful.onrender.com/thoughts')
+      .then(res => res.json())
+      // .then(json => console.log(json))
+      .then(json => {
+        console.log(json);
+        setThoughts(json);
+      })
+  }, [])
 
   const handleSubmitThought = (newText: string) => {
     const newThought: Thought = {
