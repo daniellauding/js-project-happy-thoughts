@@ -7,22 +7,54 @@ import ThoughtList from "./ThoughtList";
 const Thoughts = () => {
   const [thoughts, setThoughts] = useState<Thought[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [dots, setDots] = useState(".");
 
   const API_URL = `https://happy-thoughts-api-4ful.onrender.com/thoughts`;
 
   useEffect(() => {
+
+    const start = Date.now();
+      setLoading(true);
+
+      const minDuration = 1200; // <— only define ONCE here
+
+      const finishLoading = () => {
+        const elapsed = Date.now() - start;
+        const remaining = minDuration - elapsed;
+
+        if (remaining > 0) {
+          setTimeout(() => setLoading(false), remaining);
+        } else {
+          setLoading(false);
+        }
+      };
+
+
     const controller = new AbortController();
     fetch(API_URL, { signal: controller.signal })
       .then(res => res.json())
       .then(json => {
         console.log(json);
         setThoughts(json);
+        finishLoading();
       })
       .catch((err) => {
-        if (err.name !== "AbortError") throw err;
+        console.error(err);
+        finishLoading();
       });
     return () => controller.abort();
   }, []);
+
+  useEffect(() => {
+    if (!loading) return;
+
+    const interval = setInterval(() => {
+      setDots(prev => (prev === "..." ? "." : prev + "."));
+    }, 400);
+
+    return () => clearInterval(interval);
+  }, [loading]);
 
   const handleSubmitThought = (newText: string) => {
     fetch(API_URL, {
@@ -89,7 +121,12 @@ const Thoughts = () => {
       {error && (
         <p className="text-red-500 text-sm">{error}</p>
       )}
-			<ThoughtList thoughts={thoughts} onLike={handleLike} />
+      {loading && (
+        <p className="text-gray-500 mx-auto text-center">
+          Loading thoughts{dots}
+        </p>
+      )}
+			{!loading && <ThoughtList thoughts={thoughts} onLike={handleLike} />}
     </div>
   )
 }
