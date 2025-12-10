@@ -8,7 +8,7 @@ const ThoughtList: React.FC<ThoughtListProps> = ({ thoughts, onLike }) => {
       <ul className="thought-list flex flex-col gap-8">
         {thoughts.map((thought) => (
           <ThoughtCard
-            key={thought.id}
+            key={thought._id}
             thought={thought}
             onLike={onLike}
           />

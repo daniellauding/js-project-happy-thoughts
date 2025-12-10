@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
-import { ThoughtFormProps } from '../types/Thought';
+import { ThoughtFormProps } from "../types/Thought";
 
 const FORM_LABEL = "What's making you happy right now?";
 const FORM_MESSAGE_PLACEHOLDER = "Type your happy thought here...";
 const FORM_BUTTON_TEXT = "❤️ Send happy thought ❤️";
-
-interface ThoughtFormProps {
-  // label: string;
-  // placeholder: string;
-  // buttonText: string;
-  onSubmitThought: (text: string) => void;
-}
 
 const ThoughtForm = ({ onSubmitThought }: ThoughtFormProps) => {
 
