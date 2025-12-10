@@ -86,15 +86,10 @@ const Thoughts = () => {
     <div
 			className="thoughts flex flex-col gap-8">
 			<ThoughtForm onSubmitThought={handleSubmitThought} />
-<<<<<<< HEAD
       {error && (
         <p className="text-red-500 text-sm">{error}</p>
       )}
 			<ThoughtList thoughts={thoughts} onLike={handleLike} />
-=======
-      {/* Skickar hela listan och onLike-handlern ner till ThoughtList */}
-			{/* <ThoughtList thoughts={thoughts} onLike={handleLike} /> */}
->>>>>>> 0657caeb5ed9691635e904635ccbc800ebd125db
     </div>
   )
 }
