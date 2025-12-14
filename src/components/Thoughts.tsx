@@ -9,6 +9,8 @@ const Thoughts = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [dots, setDots] = useState(".");
+  const [newThoughtId, setNewThoughtId] = useState<string | null>(null);
+  const [likedThoughts, setLikedThoughts] = useState<Set<string>>(new Set());
 
   const API_URL = `https://happy-thoughts-api-4ful.onrender.com/thoughts`;
 
@@ -17,7 +19,7 @@ const Thoughts = () => {
     const start = Date.now();
       setLoading(true);
 
-      const minDuration = 1200; // <— only define ONCE here
+      const minDuration = 1200;
 
       const finishLoading = () => {
         const elapsed = Date.now() - start;
@@ -35,7 +37,6 @@ const Thoughts = () => {
     fetch(API_URL, { signal: controller.signal })
       .then(res => res.json())
       .then(json => {
-        console.log(json);
         setThoughts(json);
         finishLoading();
       })
@@ -75,7 +76,12 @@ const Thoughts = () => {
       })
       .then(createdThought => {
         setError(null);
+        setNewThoughtId(createdThought._id);
         setThoughts(prev => [createdThought, ...prev]);
+        
+        setTimeout(() => {
+          setNewThoughtId(null);
+        }, 600);
       })
       .catch(err => {
         console.error("POST error:", err);
@@ -90,6 +96,13 @@ const Thoughts = () => {
   };
 
   const handleLike = (id: string) => {
+    
+    if (likedThoughts.has(id)) {
+      return;
+    }
+
+    setLikedThoughts(prev => new Set(prev).add(id));
+
     setThoughts(prev =>
       prev.map(thought =>
         thought._id === id
@@ -111,12 +124,19 @@ const Thoughts = () => {
             )
           );
         })
-        .catch(err => console.error("LIKE error:", err));
+        .catch(err => {
+          console.error("LIKE error:", err);
+
+          setLikedThoughts(prev => {
+            const newSet = new Set(prev);
+            newSet.delete(id);
+            return newSet;
+          });
+        });
   }
 
   return (
-    <div
-			className="thoughts flex flex-col gap-8">
+    <div className="flex flex-col gap-8">
 			<ThoughtForm onSubmitThought={handleSubmitThought} />
       {error && (
         <p className="text-red-500 text-sm">{error}</p>
@@ -126,7 +146,7 @@ const Thoughts = () => {
           Loading thoughts{dots}
         </p>
       )}
-			{!loading && <ThoughtList thoughts={thoughts} onLike={handleLike} />}
+			{!loading && <ThoughtList thoughts={thoughts} onLike={handleLike} newThoughtId={newThoughtId} likedThoughts={likedThoughts} />}
     </div>
   )
 }

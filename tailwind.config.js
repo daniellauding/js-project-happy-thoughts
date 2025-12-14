@@ -13,7 +13,7 @@ export default {
         number: ["var(--number-font-family)"],
       },
       boxShadow: {
-        pop: "8px 7px 0px rgba(0,0,0,1)",
+        pop: "8px 7px 0px var(--tw-shadow-color, rgba(0,0,0,1))",
       },
     },
 

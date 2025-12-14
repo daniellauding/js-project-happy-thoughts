@@ -8,6 +8,8 @@ export interface Thought {
 export interface ThoughtListProps {
 	thoughts: Thought[];
 	onLike: (id: string) => void;
+	newThoughtId?: string | null;
+	likedThoughts: Set<string>;
 }
 
 export interface ThoughtFormProps {
@@ -16,5 +18,7 @@ export interface ThoughtFormProps {
 
 export interface ThoughtCardProps {
 	thought: Thought;
-	onLike: (id: string) => void; 
+	onLike: (id: string) => void;
+	isNew?: boolean;
+	isLiked?: boolean;
 }
