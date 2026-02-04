@@ -5,7 +5,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'media', // Enable dark mode with media query (OS preference)
+  darkMode: 'class', // Enable dark mode with class (manual toggle + system preference)
   theme: {
     extend: {
       fontFamily: {
